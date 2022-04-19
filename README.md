@@ -4,7 +4,7 @@
 * Use of props
 * Use of state
 * Use of semantic ui library
-* Use of Hooks: useState, useEffect
+* Use of Hooks: useState, useEffect, useRef
 * (JS related) Destructuring of an object
 * Lifecycle methods
 * Nested callbacks
