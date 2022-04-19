@@ -8,6 +8,8 @@
 * (JS related) Destructuring of an object
 * Lifecycle methods
 * Nested callbacks
+* Throtlling API requests
+* Cleanup function
 
 ## Description of the project :open_book:
 
