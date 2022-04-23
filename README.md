@@ -10,6 +10,7 @@
 * Nested callbacks
 * Throtlling API requests
 * Cleanup function
+* Event bubbling
 
 ## Description of the project :open_book:
 

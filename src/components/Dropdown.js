@@ -1,7 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
     const [open, setOpen] = useState(false)
+
+    //since v17 adding event listeners(the vanilla way) needs a third parameter, otherwise events are not fired, more info: https://reactjs.org/blog/2020/08/10/react-v17-rc.html#fixing-potential-issues
+    useEffect(() => {
+        document.body.addEventListener('click', () => {
+            setOpen(false)
+        }, {capture: true})
+    }, [])
 
     const renderedOptions = options.map(option => {
         //returning null with react.js means not rendering anything
@@ -15,6 +22,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
             </div>
         );
     })
+    //event bubbling taking place, ex: we click on a list item rendered by renderedOptions, it returns an event that goes to the parent that has an onClick event
     return (
         <div className="ui form">
             <div className="field">
