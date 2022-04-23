@@ -6,13 +6,19 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     //IMPORTANT: If there are react setted events and vanilla js events, vanilla events are fired first, then react events.
     //since v17 adding event listeners(the vanilla way) needs a third parameter, otherwise events are not fired, more info: https://reactjs.org/blog/2020/08/10/react-v17-rc.html#fixing-potential-issues
     useEffect(() => {
-        document.body.addEventListener('click', (event) => {
+         const onBodyClick = (event) => {
             //if the element we click is inside the ref elem (ui form in this case) we return early so we don't execute the setOpen(false)
             if(ref.current.contains(event.target)) {
                 return
             }
             setOpen(false)
-        }, {capture: true})
+        }
+
+        document.body.addEventListener('click', onBodyClick, {capture: true})
+
+        return () => {
+            document.body.removeEventListener('click', onBodyClick, {capture: true})
+        }
     }, [])
 
     const renderedOptions = options.map(option => {
