@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
     const [open, setOpen] = useState(false)
-
+    const ref = useRef();
+    //IMPORTANT: If there are react setted events and vanilla js events, vanilla events are fired first, then react events.
     //since v17 adding event listeners(the vanilla way) needs a third parameter, otherwise events are not fired, more info: https://reactjs.org/blog/2020/08/10/react-v17-rc.html#fixing-potential-issues
     useEffect(() => {
-        document.body.addEventListener('click', () => {
+        document.body.addEventListener('click', (event) => {
+            //if the element we click is inside the ref elem (ui form in this case) we return early so we don't execute the setOpen(false)
+            if(ref.current.contains(event.target)) {
+                return
+            }
             setOpen(false)
         }, {capture: true})
     }, [])
@@ -24,7 +29,7 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     })
     //event bubbling taking place, ex: we click on a list item rendered by renderedOptions, it returns an event that goes to the parent that has an onClick event
     return (
-        <div className="ui form">
+        <div ref={ref} className="ui form">
             <div className="field">
                 <label className="label">Select a color</label>
                 <div onClick ={() => setOpen(!open)} className={`ui selection dropdown ${open ? 'visible active' : ''}`}>
